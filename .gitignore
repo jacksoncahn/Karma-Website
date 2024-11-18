@@ -24,3 +24,5 @@ src/firebase-config.js
 *.njsproj
 *.sln
 *.sw?
+firebaseConfig.js
+hosting.ZGlzdA.cache
