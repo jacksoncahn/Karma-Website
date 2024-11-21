@@ -1,17 +1,25 @@
-import './App.css'
-export default function ActionEntry({action}) {
-    const submitAction = (e) => {
-        if (e.key === "Enter") {
-            action(e);
-        }
-    };
-    return (
-        <form className="entry" onSubmit={action}>
-            <input 
-                type="text" 
-                placeholder="Please enter an action"
-                onKeyDown={submitAction}
-            ></input>
-        </form>
-    )
-}
+import React, { useState } from "react";
+
+const ActionEntry = ({ action }) => {
+  const [input, setInput] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    action(input);
+    setInput("");
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Enter your query..."
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default ActionEntry;

@@ -26,3 +26,6 @@ src/firebase-config.js
 *.sw?
 firebaseConfig.js
 hosting.ZGlzdA.cache
+
+# API key moment
+apikeyhere.env
