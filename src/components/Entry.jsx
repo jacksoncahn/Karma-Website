@@ -10,14 +10,15 @@ const ActionEntry = ({ action }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className = "entry" onSubmit={handleSubmit}>
       <input
+        className = "query"
         type="text"
         placeholder="Enter your query..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
-      />
-      <button type="submit">Submit</button>
+      /> &nbsp;&nbsp;
+      <button className = "submit" type="submit">Submit</button>
     </form>
   );
 };

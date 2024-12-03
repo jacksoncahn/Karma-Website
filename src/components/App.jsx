@@ -37,15 +37,17 @@ function App() {
 
   return (
     <>
-    <header>
+    <header className = "signinout">
         {!user ? <SignIn /> : <SignOut />}
       </header>
-      <h1 className="title">Karma Kalculator</h1>
+      <div className = "title">
+      <h1 className="name">Karma Kalculator</h1>
       <p className="motto">We strive for excellence</p>
-      <ActionEntry action={handleAction} />
+      </div>
+      <ActionEntry className = "entry" action={handleAction} />
       {response && (
         <div className="response">
-          <h3>ChatGPT's Response:</h3>
+          <h3>Evaluation:</h3>
           <p>{response}</p>
         </div>
       )}
