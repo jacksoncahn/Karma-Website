@@ -5,7 +5,7 @@ import ActionEntry from "./Entry.jsx";
 import { callChatGPT } from "./openAI.js";
 
 function App() {
-  const [response, setResponse] = useState("");
+  /* const [response, setResponse] = useState("");
 
   // Create a debounced version of the callChatGPT function
   const debouncedCallChatGPT = debounce(async (userInput) => {
@@ -16,13 +16,13 @@ function App() {
     } catch (error) {
       console.error("Error communicating with ChatGPT:", error);
     }
-  }, 1000); // 1000ms (1 second) delay between requests
+  }, 3000); // 1000ms (1 second) delay between requests
 
   const handleAction = (userInput) => {
     console.log('User input received:', userInput);  // Debug log
     debouncedCallChatGPT(userInput);
   };
-
+  */
   return (
     <>
       <h1 className="title">Karma Kalculator</h1>

@@ -11,13 +11,16 @@ const openai = new OpenAIApi({
 
 export const callChatGPT = async (userInput) => {
   try {
+    console.log("Calling ChatGPT API with input:", userInput);
     // Add a small delay before each request (e.g., 1 second)
     await delay(1000); // Delay of 1000ms (1 second)
 
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",  // Use the correct model
+      model: "gpt-4o-mini",  
       messages: [
         {
+          role: "system", 
+          content: "you are a bot that helps users determine the morality of specific actions the users give you",
           role: "user",
           content: userInput,
         },
