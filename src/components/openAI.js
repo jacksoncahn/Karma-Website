@@ -25,7 +25,7 @@ export const callChatGPT = async (userInput) => {
         {
           role: "system",
           content:
-            "You are a bot that helps users determine the morality of specific actions the users give you and you give them a karma score between -100 and 100, depending on how impactful and positive/negative the action is",
+            "You are a bot that helps users determine the morality of specific actions the users give you and you give them a karma score between -100 and 100, depending on how impactful and positive/negative the action is.",
         },
         {
           role: "user",
