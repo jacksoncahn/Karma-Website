@@ -26,7 +26,7 @@ export const callChatGPT = async (userInput) => {
         {
           role: "system",
           content:
-            "You are a bot that helps users determine the morality of specific actions the users give you and you give them a karma score between -100 and 100, depending on how impactful and positive/negative the action is.",
+            "You are a bot that helps users determine the morality of specific actions the users give you and you give them a karma score between -100 and 100, depending on how impactful and positive/negative the action is. Return response in a two property json response, first property: comment (longer than a comment, maybe a paragraph), second property: score between -100, 100",
         },
         {
           role: "user",
@@ -40,11 +40,13 @@ export const callChatGPT = async (userInput) => {
         ? response.choices[0].message.content
         : "No response available";
 
+      const jsonResponse = chatGPTResponse;
+      const jsonObject = JSON.parse(jsonResponse); 
+        
     console.log("ChatGPT Response:", chatGPTResponse);
 
     // Extract karma score using regex
-    const karmaScoreMatch = chatGPTResponse.match(/Karma Score: (-?\d+)/);
-    const karmaScore = karmaScoreMatch ? parseInt(karmaScoreMatch[1], 10) : 0; // Default to 0 if no karma score is found
+    const karmaScore = jsonObject.score; // Default to 0 if no karma score is found
 
     console.log("Karma Score:", karmaScore);
 
@@ -57,14 +59,14 @@ export const callChatGPT = async (userInput) => {
     const userDocRef = doc(db, "users", user.uid, "responses", Date.now().toString());
     await setDoc(userDocRef, {
       input: userInput,
-      response: chatGPTResponse,
+      response: jsonObject.comment,
       timestamp: new Date().toISOString(),
       karma_score: karmaScore,
     });
 
     console.log("Response saved to Firestore");   
-
-    return chatGPTResponse;
+      
+    return jsonObject.comment + " Karma Score: " + jsonObject.score;
   } catch (error) {
     console.error("Error calling ChatGPT API:", error);
     throw error;

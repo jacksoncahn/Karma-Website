@@ -5,7 +5,6 @@ import ActionEntry from "./Entry.jsx";
 import { SignIn, SignOut } from "./auth";
 import { useAuthentication } from "../services/authService";
 import { callChatGPT } from "./openAI.js";
-import { saveResponseToFirestore } from "../firebase/firebaseUtils.js"; // Import save function
 import {fetchData} from "./fetchUserData.js";
 import loadingImage from "/loading.png"
 import loadingSound from "/loading-sound.mp3"
@@ -57,7 +56,7 @@ function App() {
       setResponse(chatResponse);
 
       // Save the response to Firestore
-      await saveResponseToFirestore(userInput, chatResponse);
+      // await saveResponseToFirestore(userInput, chatResponse);
     } catch (error) {
       console.error("Error communicating with ChatGPT:", error);
     } finally {

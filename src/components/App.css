@@ -80,9 +80,11 @@
   align-self: center;
   width: 300px; /* Set container width */
   height: 90vh; /* Set container height */
-  overflow-y: scroll; /* Add vertical scrollbar */
+  scrollbar-width: none;
+  overflow-y: scroll; /* Add vertical scrollbar
+  
   border: 1px solid #ccc; /* Optional: border for visibility */
-  background-color: rgb(224, 224, 224);
+  background-color: rgb(114, 114, 114);
   border-radius: 8px;
 }
 
@@ -114,8 +116,8 @@
   }
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   body {
     filter: invert(1);
   }
-}
+} */
