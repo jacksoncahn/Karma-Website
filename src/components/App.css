@@ -113,3 +113,9 @@
     transform: rotate(360deg);
   }
 }
+
+@media (prefers-color-scheme: light) {
+  body {
+    filter: invert(1);
+  }
+}

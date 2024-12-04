@@ -40,6 +40,12 @@ body {
   min-height: 100vh;
   text-align: center;
   display: flex;
+  margin: 0;
+  background-image: url('background.gif');
+  background-size: cover; /* Adjusts size to cover the whole screen */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents repetition */
+
 }
 
 
