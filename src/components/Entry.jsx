@@ -12,7 +12,7 @@ const ActionEntry = ({ action }) => {
   return (
     <form className = "entry" onSubmit={handleSubmit}>
       <input
-        className = "query"
+        id = "query"
         type="text"
         placeholder="Enter your query..."
         value={input}
