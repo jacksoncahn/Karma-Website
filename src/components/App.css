@@ -58,18 +58,37 @@
   font-size: 16px;
 }
 
-.entry-container {
-  grid-column: 2 / span 1; /* Center in the grid */
-  grid-row: 2 / span 1; /* Position in the second row */
-  display: flex;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center horizontally */
-  gap: 10px; /* Add space between the GIF and the query box */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.loading img {
-  width: 60px; /* Smaller GIF size */
-  height: 60px;
+p {
+  text-wrap: pretty;
+  font-size: 16px;
+}
+
+.rotating-image {
+  width: 70px;
+  height: 70px;
+  animation: rotate 1.55s linear infinite;
+}
+
+.entry-container {
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.loading {
+  margin-bottom: 10px;
 }
 
 

@@ -1,21 +1,22 @@
 import { useState } from "react";
-import { debounce } from "lodash"; // Import debounce from lodash
+import { debounce } from "lodash";
 import "./App.css";
 import ActionEntry from "./Entry.jsx";
 import { SignIn, SignOut } from "./auth";
 import { useAuthentication } from "../services/authService";
 import { callChatGPT } from "./openAI.js";
-import { saveResponseToFirestore } from "../firebase/firebaseUtils.js"; // Import save function
-import loadingGif from "./loading.gif"; // Import your loading GIF
+import { saveResponseToFirestore } from "../firebase/firebaseUtils.js";
+import loadingImage from "./loading.png"; // Static loading image
+import loadingSound from "./loading-sound.mp3"; // Import sound effect
 
 function App() {
   const [response, setResponse] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // State to track loading
+  const [isLoading, setIsLoading] = useState(false);
   const user = useAuthentication();
 
   // Debounced version of the API call
   const debouncedCallChatGPT = debounce(async (userInput) => {
-    console.log("API request made for:", userInput); // Debug log
+    console.log("API request made for:", userInput);
     try {
       const chatResponse = await callChatGPT(userInput);
       setResponse(chatResponse);
@@ -25,13 +26,18 @@ function App() {
     } catch (error) {
       console.error("Error communicating with ChatGPT:", error);
     } finally {
-      setIsLoading(false); // End loading after the API call
+      setIsLoading(false);
     }
-  }, 3000); // 3000ms (3-second) delay
+  }, 3000);
 
   const handleAction = (userInput) => {
-    console.log("User input received:", userInput); // Debug log
-    setIsLoading(true); // Start loading immediately when the action is triggered
+    console.log("User input received:", userInput);
+
+    // Play the sound effect
+    const audio = new Audio(loadingSound); // Create a new Audio object
+    audio.play(); // Play the sound
+
+    setIsLoading(true); // Start loading
     debouncedCallChatGPT(userInput);
   };
 
@@ -45,19 +51,20 @@ function App() {
         <p className="motto">We strive for excellence</p>
       </div>
       <div className="entry-container">
-        {isLoading && (
-          <div className="loading">
-            <img src={loadingGif} alt="Loading..." />
-          </div>
-        )}
         <ActionEntry className="entry" action={handleAction} />
       </div>
-      {response && !isLoading && (
-        <div className="response">
-          <h3>Evaluation:</h3>
-          <p>{response}</p>
-        </div>
-      )}
+      <div className="response">
+        {isLoading ? (
+          <div className="loading">
+            <img src={loadingImage} alt="Loading..." className="rotating-image" />
+          </div>
+        ) : response ? (
+          <>
+            <h3>Evaluation:</h3>
+            <p>{response}</p>
+          </>
+        ) : null}
+      </div>
     </>
   );
 }
