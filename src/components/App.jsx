@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { debounce } from "lodash"; // Import debounce from lodash
 import "./App.css";
 import ActionEntry from "./Entry.jsx";
-import { SignIn, SignOut } from "./auth"
-import { useAuthentication } from "../services/authService"
+import { SignIn, SignOut } from "./auth";
+import { useAuthentication } from "../services/authService";
 import { callChatGPT } from "./openAI.js";
 import { saveResponseToFirestore } from "../firebase/firebaseUtils.js"; // Import save function
 import {fetchData} from "./fetchUserData.js";
@@ -46,36 +46,56 @@ function App() {
     return () => clearInterval(intervalId2); // Cleanup interval on unmount
   }, []);
 
-
-  // Create a debounced version of the callChatGPT function
+  // Debounced version of the API call
   const debouncedCallChatGPT = debounce(async (userInput) => {
-    console.log("API request made for:", userInput); // Debug log
+    console.log("API request made for:", userInput);
     try {
       const chatResponse = await callChatGPT(userInput);
       setResponse(chatResponse);
-
 
       // Save the response to Firestore
       await saveResponseToFirestore(userInput, chatResponse);
     } catch (error) {
       console.error("Error communicating with ChatGPT:", error);
+    } finally {
+      setIsLoading(false);
     }
-  }, 3000); // 3000ms (3-second) delay between requests
-
+  }, 3000);
 
   const handleAction = (userInput) => {
-    console.log("User input received:", userInput); // Debug log
+    console.log("User input received:", userInput);
+
+    // Play the sound effect
+    const audio = new Audio(loadingSound); // Create a new Audio object
+    audio.play(); // Play the sound
+
+    setIsLoading(true); // Start loading
     debouncedCallChatGPT(userInput);
   };
 
   return (
     <>
-    <header className = "signinout">
+      <header className="signinout">
         {!user ? <SignIn /> : <SignOut />}
       </header>
-      <div className = "title">
-      <h1 className="name">Karma Kalculator</h1>
-      <p className="motto">We strive for excellence</p>
+      <div className="title">
+        <h1 className="name">Karma Kalculator</h1>
+        <p className="motto">We strive for excellence</p>
+      </div>
+      <div className="entry-container">
+        <ActionEntry className="entry" action={handleAction} />
+      </div>
+      <div className="response">
+        {isLoading ? (
+          <div className="loading">
+            <img src={loadingImage} alt="Loading..." className="rotating-image" />
+          </div>
+        ) : response ? (
+          <>
+            <h3>Evaluation:</h3>
+            <p>{response}</p>
+          </>
+        ) : null}
       </div>
       <ActionEntry className = "entry" action={handleAction} />
       {user && response && (
@@ -98,6 +118,5 @@ function App() {
     </>
   );
 }
-
 
 export default App;
