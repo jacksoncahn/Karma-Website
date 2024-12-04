@@ -7,12 +7,15 @@ import { useAuthentication } from "../services/authService";
 import { callChatGPT } from "./openAI.js";
 import { saveResponseToFirestore } from "../firebase/firebaseUtils.js"; // Import save function
 import {fetchData} from "./fetchUserData.js";
+import loadingImage from "/loading.png"
+import loadingSound from "/loading-sound.mp3"
 
 function App() {
   const [response, setResponse] = useState("");
   const user = useAuthentication()
   const [data, setData] = useState("");
   const [total, setTotal] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -82,9 +85,8 @@ function App() {
         <h1 className="name">Karma Kalculator</h1>
         <p className="motto">We strive for excellence</p>
       </div>
-      <div className="entry-container">
-        <ActionEntry className="entry" action={handleAction} />
-      </div>
+      
+      <ActionEntry className = "entry" action={handleAction} />
       <div className="response">
         {isLoading ? (
           <div className="loading">
@@ -97,13 +99,6 @@ function App() {
           </>
         ) : null}
       </div>
-      <ActionEntry className = "entry" action={handleAction} />
-      {user && response && (
-        <div className="response">
-          <h3>Evaluation:</h3>
-          <p>{response}</p>
-        </div>
-      )}
       <div className = "database">
         <h1>{user? total: null}</h1>
         {data? data.map(item => (
