@@ -79,3 +79,9 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } 
+
+.dbbuttons {
+  border-radius: 5px;
+  width: 200px;
+  border: 1px solid;
+}

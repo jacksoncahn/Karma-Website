@@ -2,6 +2,7 @@ import OpenAIApi from "openai";
 import { apiKeyGPT } from "../firebase/firebaseConfig";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import {useEffect} from "react";
 
 const db = getFirestore();
 const auth = getAuth();
@@ -61,7 +62,7 @@ export const callChatGPT = async (userInput) => {
       karma_score: karmaScore,
     });
 
-    console.log("Response saved to Firestore");
+    console.log("Response saved to Firestore");   
 
     return chatGPTResponse;
   } catch (error) {
