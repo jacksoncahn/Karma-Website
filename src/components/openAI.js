@@ -8,8 +8,8 @@ const auth = getAuth();
 
 const openai = new OpenAIApi({
   apiKey: apiKeyGPT,
-  dangerouslyAllowBrowser:true,
-})
+  dangerouslyAllowBrowser: true,
+});
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -41,16 +41,24 @@ export const callChatGPT = async (userInput) => {
 
     console.log("ChatGPT Response:", chatGPTResponse);
 
+    // Extract karma score using regex
+    const karmaScoreMatch = chatGPTResponse.match(/Karma Score: (-?\d+)/);
+    const karmaScore = karmaScoreMatch ? parseInt(karmaScoreMatch[1], 10) : 0; // Default to 0 if no karma score is found
+
+    console.log("Karma Score:", karmaScore);
+
     const user = auth.currentUser;
     if (!user) {
       throw new Error("No authenticated user found. Please sign in.");
     }
 
+    // Correct Firestore document reference: removed the invalid score=10 part
     const userDocRef = doc(db, "users", user.uid, "responses", Date.now().toString());
     await setDoc(userDocRef, {
       input: userInput,
       response: chatGPTResponse,
       timestamp: new Date().toISOString(),
+      karma_score: karmaScore,
     });
 
     console.log("Response saved to Firestore");
