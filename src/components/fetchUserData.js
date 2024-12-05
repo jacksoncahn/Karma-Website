@@ -8,16 +8,14 @@ export const fetchData = () => {
 
   return new Promise((resolve, reject) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log('User state changed:', user);  // Debugging line
 
       if (user) {
-        // Get the responses collection
         const responsesCollectionRef = collection(db, 'users', user.uid, 'responses');
         const querySnapshot = await getDocs(responsesCollectionRef);
 
         if (!querySnapshot.empty) {
           const responses = querySnapshot.docs.map(doc => doc.data());
-          const arr = Object.values(responses);  // Return the responses data
+          const arr = Object.values(responses);
           resolve(arr);
         } else {
           resolve(null);
@@ -26,8 +24,7 @@ export const fetchData = () => {
         resolve(null);
       }
 
-      unsubscribe(); // Clean up the listener
+      unsubscribe();
     });
   });
 };
-//end OpenAI

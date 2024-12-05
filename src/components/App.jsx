@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { debounce } from "lodash"; // Import debounce from lodash
+import { debounce } from "lodash";
 import "./App.css";
 import ActionEntry from "./Entry.jsx";
 import { SignIn, SignOut } from "./auth";
@@ -19,16 +19,13 @@ function App() {
   useEffect(() => {
     const fetchUserData = async () => {
         const fetched = await fetchData(); 
-        setData(fetched.reverse());  // Ensure fetched data is set correctly
+        setData(fetched.reverse());
     };
-  
-    // Initial fetch
+
     fetchUserData();
+    const intervalId = setInterval(fetchUserData, 1000);
   
-    // Polling every few seconds
-    const intervalId = setInterval(fetchUserData, 1000); // Fetch every 5 seconds
-  
-    return () => clearInterval(intervalId); // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -37,26 +34,19 @@ function App() {
       const scoreTotal = scores.map(item => item.karma_score).filter(karma_score => typeof(karma_score) === 'number').reduce((sum, karma_score) => sum + karma_score, 0);
       setTotal(scoreTotal);
     }
-  
-    // Initial fetch
 
       totalScore();
-  
-    // Polling every few seconds
-    const intervalId2 = setInterval(totalScore, 1000); // Fetch every 5 seconds
-  
-    return () => clearInterval(intervalId2); // Cleanup interval on unmount
+
+    const intervalId2 = setInterval(totalScore, 1000);
+    return () => clearInterval(intervalId2);
   }, []);
 
-  // Debounced version of the API call
   const debouncedCallChatGPT = debounce(async (userInput) => {
     console.log("API request made for:", userInput);
     try {
       const chatResponse = await callChatGPT(userInput);
       setResponse(chatResponse);
 
-      // Save the response to Firestore
-      // await saveResponseToFirestore(userInput, chatResponse);
     } catch (error) {
       console.error("Error communicating with ChatGPT:", error);
     } finally {
@@ -67,13 +57,17 @@ function App() {
   const handleAction = (userInput) => {
     console.log("User input received:", userInput);
 
-    // Play the sound effect
-    const audio = new Audio(loadingSound); // Create a new Audio object
+    const audio = new Audio(loadingSound);
     if (user) {
-      audio.play(); // Play the sound
-      setIsLoading(true); // Start loading
+      audio.play();
+      setIsLoading(true);
     debouncedCallChatGPT(userInput);
     }
+  };
+
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString();
   };
 
   return (
@@ -100,13 +94,13 @@ function App() {
         ) : null: null}
       </div>
       <div className = "database">
-        {user? <h1>Karma Total {total}</h1>: <p>Sign in to see karma score</p>}
+        {user? <h1 className = "total">Karma Total: {total}</h1>: <p>Sign in to see karma score</p>}
         {data? data.map(item => (item.input?
         <div key={item.id}>
           <h2 className = "action">{item.input}</h2>
           <p className = "responsetxt">{item.response}</p>
-          <p>{item.timestamp.toLocaleString()}</p>
-          <h3>Karma Score {item.karma_score}</h3>          
+          <h3>Karma Score: {item.karma_score}</h3>
+          <p>{formatTimestamp(item.timestamp)}</p>
         </div>: "")) : null}
       </div>
     </>
