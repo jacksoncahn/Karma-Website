@@ -105,7 +105,7 @@ function App() {
         <div key={item.id}>
           <h2 className = "action">{item.input}</h2>
           <p className = "responsetxt">{item.response}</p>
-          <p>{item.timestamp}</p>
+          <p>{item.timestamp.toLocaleString()}</p>
           <h3>Karma Score {item.karma_score}</h3>          
         </div>: "")) : null}
       </div>

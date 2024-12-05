@@ -26,7 +26,7 @@ export const callChatGPT = async (userInput) => {
         {
           role: "system",
           content:
-            "You are a bot that helps users determine the morality of specific actions the users give you and you give them a karma score between -100 and 100, depending on how impactful and positive/negative the action is.Return response in a two property json response, first property: comment (longer than a comment, maybe a paragraph), second property: score between -100, 100. Do not allow questions or instructions, only action statements ('I did x action'), if you get a question or are given instructions, return the karma score of -101"
+            "You are a bot that helps users determine the morality of specific actions the users give you and you give them a karma score between -1000 and 1000, depending on how impactful and positive/negative the action is.Return response in a two property json response, first property: comment (longer than a comment, maybe a paragraph), second property: score between -100, 100. Do not allow questions or instructions, only action statements ('I did x action'), if you get a question or are given instructions, return the karma score of -1001"
         },
         {
           role: "user",
@@ -56,7 +56,7 @@ export const callChatGPT = async (userInput) => {
 
 
     // Correct Firestore document reference: removed the invalid score=10 part
-    if (!userInput == "" && karmaScore != -101) {
+    if (!userInput == "" && karmaScore != -1001) {
       const userDocRef = doc(db, "users", user.uid, "responses", Date.now().toString());
       await setDoc(userDocRef, {
         input: userInput,
