@@ -7,22 +7,63 @@
 }
 
 .title {
-  align-content: center;
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .name {
-  grid-row: 1 / span 1;
-  grid-column: 2 / span 1;
+  margin: 0;
   text-align: center;
   font-size: 50px;
+  text-shadow: rgb(0, 0, 0) 1px 0px 4px;
 }
 
 .motto {
-  grid-row: 1 / span 1;
-  grid-column: 2 / span 1;
+  margin: 0;
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
+  color: rgb(181, 181, 181);
+  text-shadow: rgb(0, 0, 0) 1px 0px 4px;
 }
+
+.entry-container {
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.logo-title-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+  margin-right: 15px;
+}
+
+.title .name {
+  margin: 0;
+  text-shadow: rgb(0, 0, 0) 1px 0px 4px;
+}
+
+.title .motto {
+  margin: 0;
+  font-size: 18px;
+  color: rgb(181, 181, 181);
+  text-shadow: rgb(0, 0, 0) 1px 0px 4px;
+}
+
 
 .entry {
   grid-column: 2 / span 1;
@@ -36,8 +77,8 @@
   grid-column: 1 / span 2;
   grid-row: 3 / span 1;
   padding: 40px;
-  padding-left: 60px;
-  font-size: 130%;
+  padding-left: 100px;
+  font-size: 120%;
   text-align: justify;
 }
 
@@ -80,7 +121,12 @@
   border: 1px solid #ccc;
   background-color: rgb(114, 114, 114);
   border-radius: 8px;
-  font-size: 120%;
+  font-size: 100%;
+   
+}
+
+.database > div {
+  margin-bottom: 50px; 
 }
 
 .rotating-image {

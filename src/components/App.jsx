@@ -76,9 +76,16 @@ function App() {
         {!user ? <SignIn /> : <SignOut />}
       </header>
       <div className="title">
-        <h1 className="name">Karma Kalculator</h1>
-        <p className="motto">We strive for excellence</p>
+      <div className="logo-title-container">
+      <a href="/">
+      <img src="/karma-logo.png" alt="Logo" className="logo" />
+        </a>
+        <div>
+          <h1 className="name">Karmalyze</h1>
+          <p className="motto">What goes around comes around ™</p>
+        </div>
       </div>
+    </div>
       
       <ActionEntry className = "entry" action={handleAction} />
       <div className="response">
@@ -101,6 +108,7 @@ function App() {
           <p className = "responsetxt">{item.response}</p>
           <h3>Karma Score: {item.karma_score}</h3>
           <p>{formatTimestamp(item.timestamp)}</p>
+          <div>{" "}</div>
         </div>: "")) : null}
       </div>
     </>
