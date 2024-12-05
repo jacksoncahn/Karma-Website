@@ -14,7 +14,7 @@ const ActionEntry = ({ action }) => {
       <input
         id = "query"
         type="text"
-        placeholder="Enter your query..."
+        placeholder="Enter your action..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
       /> &nbsp;&nbsp;

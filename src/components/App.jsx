@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     const fetchUserData = async () => {
         const fetched = await fetchData(); 
-        setData(fetched);  // Ensure fetched data is set correctly
+        setData(fetched.reverse());  // Ensure fetched data is set correctly
     };
   
     // Initial fetch
@@ -69,10 +69,11 @@ function App() {
 
     // Play the sound effect
     const audio = new Audio(loadingSound); // Create a new Audio object
-    audio.play(); // Play the sound
-
-    setIsLoading(true); // Start loading
+    if (user) {
+      audio.play(); // Play the sound
+      setIsLoading(true); // Start loading
     debouncedCallChatGPT(userInput);
+    }
   };
 
   return (
@@ -87,7 +88,7 @@ function App() {
       
       <ActionEntry className = "entry" action={handleAction} />
       <div className="response">
-        {isLoading ? (
+        {user? isLoading ? (
           <div className="loading">
             <img src={loadingImage} alt="Loading..." className="rotating-image" />
           </div>
@@ -96,18 +97,17 @@ function App() {
             <h3>Evaluation:</h3>
             <p>{response}</p>
           </>
-        ) : null}
+        ) : null: null}
       </div>
       <div className = "database">
-        <h1>{user? total: null}</h1>
-        {data? data.map(item => (
-          item.input?
+        {user? <h1>Karma Total {total}</h1>: <p>Sign in to see karma score</p>}
+        {data? data.map(item => (item.input?
         <div key={item.id}>
-          <p className = "action">{item.input}</p>
+          <h2 className = "action">{item.input}</h2>
           <p className = "responsetxt">{item.response}</p>
-          <p>Karma Score {item.karma_score}</p>          
-        </div>: ""
-      )) : null}
+          <p>{item.timestamp}</p>
+          <h3>Karma Score {item.karma_score}</h3>          
+        </div>: "")) : null}
       </div>
     </>
   );
