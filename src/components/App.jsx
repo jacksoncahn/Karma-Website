@@ -102,14 +102,14 @@ function App() {
       </div>
       <div className = "database">
         {user? <h1 className = "total">Karma Total: {total}</h1>: <p>Sign in to see karma score</p>}
-        {data? data.map(item => (item.input?
+        {user? data? data.map(item => (item.input?
         <div key={item.id}>
           <h2 className = "action">{item.input}</h2>
           <p className = "responsetxt">{item.response}</p>
           <h3>Karma Score: {item.karma_score}</h3>
           <p>{formatTimestamp(item.timestamp)}</p>
           <div>{" "}</div>
-        </div>: "")) : null}
+        </div>: "")) : null: null}
       </div>
     </>
   );
